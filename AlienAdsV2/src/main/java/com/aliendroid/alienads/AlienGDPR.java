@@ -73,9 +73,6 @@ public class AlienGDPR {
                         true);
                 break;
 
-            case "APPLOVIN-M":
-
-                break;
         }
     }
 
