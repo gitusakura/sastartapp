@@ -29,55 +29,59 @@ public class AliendroidReward {
     private static RewardedAd mRewardedAd;
 
     //Uranus
+    //Uranus
     public static void LoadRewardAdmob(Activity activity, String selectBackupAds, String idReward, String idBackupReward) {
-        Bundle extras = new FacebookExtras()
-                .setNativeBanner(true)
-                .build();
-        AdRequest adRequest = new AdRequest.Builder()
-                .addNetworkExtrasBundle(FacebookAdapter.class, extras)
-                .build();
-        RewardedAd.load(activity, idReward,
-                adRequest, new RewardedAdLoadCallback() {
-                    @Override
-                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
-                        mRewardedAd = null;
-                    }
+        try {
+            Bundle extras = new FacebookExtras()
+                    .setNativeBanner(true)
+                    .build();
+            AdRequest adRequest = new AdRequest.Builder()
+                    .addNetworkExtrasBundle(FacebookAdapter.class, extras)
+                    .build();
+            RewardedAd.load(activity, idReward,
+                    adRequest, new RewardedAdLoadCallback() {
+                        @Override
+                        public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                            mRewardedAd = null;
+                        }
 
-                    @Override
-                    public void onAdLoaded(@NonNull RewardedAd rewardedAd) {
-                        mRewardedAd = rewardedAd;
+                        @Override
+                        public void onAdLoaded(@NonNull RewardedAd rewardedAd) {
+                            mRewardedAd = rewardedAd;
 
-                    }
-                });
-        switch (selectBackupAds) {
+                        }
+                    });
+            switch (selectBackupAds) {
 
-            case "STARTAPP":
-                rewardedVideo = new StartAppAd(activity);
-                rewardedVideo.setVideoListener(new VideoListener() {
-                    @Override
-                    public void onVideoCompleted() {
-                        unlockreward = true;
-                    }
-                });
+                case "STARTAPP":
+                    rewardedVideo = new StartAppAd(activity);
+                    rewardedVideo.setVideoListener(new VideoListener() {
+                        @Override
+                        public void onVideoCompleted() {
+                            unlockreward = true;
+                        }
+                    });
 
-                rewardedVideo.loadAd(StartAppAd.AdMode.REWARDED_VIDEO, new AdEventListener() {
-                    @Override
-                    public void onReceiveAd(com.startapp.sdk.adsbase.Ad ad) {
+                    rewardedVideo.loadAd(StartAppAd.AdMode.REWARDED_VIDEO, new AdEventListener() {
+                        @Override
+                        public void onReceiveAd(com.startapp.sdk.adsbase.Ad ad) {
 
-                    }
+                        }
 
-                    @Override
-                    public void onFailedToReceiveAd(com.startapp.sdk.adsbase.Ad ad) {
+                        @Override
+                        public void onFailedToReceiveAd(com.startapp.sdk.adsbase.Ad ad) {
 
-                    }
-                });
-                break;
-            case "UNITY":
+                        }
+                    });
+                    break;
+                case "UNITY":
+                    break;
 
-
-                break;
-
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
     }
 
     public static void LoadRewardStartApp(Activity activity, String selectBackupAds, String idReward, String idBackupReward) {
